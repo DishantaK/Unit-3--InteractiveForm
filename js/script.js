@@ -8,7 +8,7 @@ const jobRole = document.getElementById("title");
 const otherJob = document.getElementById("other-job-role");
 otherJob.style.display = "none";
 jobRole.addEventListener("change", function (e) {
-  e.preventDefault();
+  // e.preventDefault();
 
   if (e.target.value === "other") {
     otherJob.style.display = "inline-block";
@@ -26,7 +26,7 @@ const colorKids = colorSection.children;
 colorSection.disabled = true;
 
 designSection.addEventListener("change", function (e) {
-  e.preventDefault();
+  // e.preventDefault();
   colorSection.disabled = false;
   let currentDesign = e.target.value;
 
@@ -56,7 +56,7 @@ const activityNoneElement = document.getElementById("activities-hint");
 let totalCost = 0;
 
 activities.addEventListener("change", function (e) {
-  e.preventDefault();
+  // e.preventDefault();
   let activityCost = parseInt(e.target.getAttribute("data-cost"));
 
   // got cost, but it hasn't been added to the total yet ^^
@@ -109,12 +109,17 @@ const cardNo = document.getElementById("cc-num");
 const zip = document.getElementById("zip");
 const cvv = document.getElementById("cvv");
 
+
+
+// Begin submit event 
 form.addEventListener("submit", function (e) {
+
+  // e.preventDefault();
   // -----> validations
 
   // name isn't blank
   let nameVal = nameField.value;
-  let nameTest = /\w+\s\w+/i;
+  let nameTest = /\S/;
   let isNameValid = nameTest.test(nameVal);
   validIndividually(isNameValid, nameField);
 
@@ -140,19 +145,19 @@ form.addEventListener("submit", function (e) {
   //card no. 13-16 digits, reformat to 4 sets of 4?
   if (preferredPayment.value === "credit-card") {
     let cardVal = cardNo.value;
-    let cardTest = /\d{13,16}/;
+    let cardTest = /^\d{13,16}$/;
     let isCardValid = cardTest.test(cardVal);
     validIndividually(isCardValid, cardNo);
 
     // // zip code ... 5 digits {5}
     let zipVal = zip.value;
-    let zipTest = /\d{5}/;
+    let zipTest = /^\d{5}$/;
     let isZipValid = zipTest.test(zipVal);
     validIndividually(isZipValid, zip);
 
     // // cvv code  3 digits {3}
     let cvvVal = cvv.value;
-    let cvvTest = /\d{3}/;
+    let cvvTest = /^\d{3}$/;
     let isCvvValid = cvvTest.test(cvvVal);
     validIndividually(isCvvValid, cvv);
   } else {
@@ -170,9 +175,10 @@ form.addEventListener("submit", function (e) {
     isNameValid == false
   ) {
     e.preventDefault();
-    alert("fill out all required fields");
-  } else {
-    alert("success");
+    console.log('invalid');
+  } 
+  else {
+    console.log("success");
   }
 
   // Field Indicator
@@ -180,11 +186,11 @@ form.addEventListener("submit", function (e) {
     if (field === false) {
       element.parentElement.classList.add("not-valid");
       element.parentElement.classList.remove("valid");
-      element.parentElement.lastElementChild.hidden = false;
+      element.parentElement.lastElementChild.style.display = 'inline-block';
     } else {
       element.parentElement.classList.add("valid");
       element.parentElement.classList.remove("not-valid");
-      element.parentElement.lastElementChild.hidden = true;
+      element.parentElement.lastElementChild.style.display = 'none';
     }
   }
 });
