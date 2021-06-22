@@ -125,8 +125,12 @@ form.addEventListener("submit", function (e) {
 
   // email --> properly formatted
   let emailVal = email.value;
-  let emailTest = /^\S+@\S+$/i;
+  let emailTest = /^[^@]+@[^@]+\.[^@]+$/i;
   let isEmailValid = emailTest.test(emailVal);
+
+  
+  
+
   validIndividually(isNameValid, email);
 
   // activity - at least one selected (This is true if a cost is associated with an activity  )
@@ -164,6 +168,7 @@ form.addEventListener("submit", function (e) {
     isCardValid = true;
     isZipValid = true;
     isCvvValid = true;
+  
   }
 
   if (
@@ -176,6 +181,7 @@ form.addEventListener("submit", function (e) {
   ) {
     e.preventDefault();
     console.log('invalid');
+   
   } 
   else {
     console.log("success");
