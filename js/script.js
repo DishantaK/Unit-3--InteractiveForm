@@ -104,16 +104,14 @@ preferredPayment.addEventListener("change", function (e) {
 const form = document.querySelector("form");
 // nameField
 const email = document.getElementById("email");
+
 // activities
 const cardNo = document.getElementById("cc-num");
 const zip = document.getElementById("zip");
 const cvv = document.getElementById("cvv");
 
-
-
-// Begin submit event 
+// Begin submit event
 form.addEventListener("submit", function (e) {
-
   // e.preventDefault();
   // -----> validations
 
@@ -128,10 +126,7 @@ form.addEventListener("submit", function (e) {
   let emailTest = /^[^@]+@[^@]+\.[^@]+$/i;
   let isEmailValid = emailTest.test(emailVal);
 
-  
-  
-
-  validIndividually(isNameValid, email);
+  validIndividually(isEmailValid, email); // incorrect Value passed in?
 
   // activity - at least one selected (This is true if a cost is associated with an activity  )
 
@@ -147,28 +142,29 @@ form.addEventListener("submit", function (e) {
   // elseif Data -day-and time  isActValid false
 
   //card no. 13-16 digits, reformat to 4 sets of 4?
+
+  let cardVal = cardNo.value;
+  let cardTest = /^\d{13,16}$/;
+  let isCardValid = cardTest.test(cardVal);
+
+  // // zip code ... 5 digits {5}
+  let zipVal = zip.value;
+  let zipTest = /^\d{5}$/;
+  let isZipValid = zipTest.test(zipVal);
+
+  // // cvv code  3 digits {3}
+  let cvvVal = cvv.value;
+  let cvvTest = /^\d{3}$/;
+  let isCvvValid = cvvTest.test(cvvVal);
+  
   if (preferredPayment.value === "credit-card") {
-    let cardVal = cardNo.value;
-    let cardTest = /^\d{13,16}$/;
-    let isCardValid = cardTest.test(cardVal);
     validIndividually(isCardValid, cardNo);
-
-    // // zip code ... 5 digits {5}
-    let zipVal = zip.value;
-    let zipTest = /^\d{5}$/;
-    let isZipValid = zipTest.test(zipVal);
     validIndividually(isZipValid, zip);
-
-    // // cvv code  3 digits {3}
-    let cvvVal = cvv.value;
-    let cvvTest = /^\d{3}$/;
-    let isCvvValid = cvvTest.test(cvvVal);
     validIndividually(isCvvValid, cvv);
   } else {
     isCardValid = true;
     isZipValid = true;
     isCvvValid = true;
-  
   }
 
   if (
@@ -180,23 +176,18 @@ form.addEventListener("submit", function (e) {
     isNameValid == false
   ) {
     e.preventDefault();
-    console.log('invalid');
-   
+    console.log("invalid");
   } 
-  else {
-    console.log("success");
-  }
-
   // Field Indicator
   function validIndividually(field, element) {
     if (field === false) {
       element.parentElement.classList.add("not-valid");
       element.parentElement.classList.remove("valid");
-      element.parentElement.lastElementChild.style.display = 'inline-block';
+      element.parentElement.lastElementChild.style.display = "inline-block";
     } else {
       element.parentElement.classList.add("valid");
       element.parentElement.classList.remove("not-valid");
-      element.parentElement.lastElementChild.style.display = 'none';
+      element.parentElement.lastElementChild.style.display = "none";
     }
   }
 });
